@@ -153,6 +153,17 @@
         padding: 0.75rem;
       }
     }
+
+    .timestamp {
+      font-family: monospace;
+      color: var(--secondary-color);
+      white-space: nowrap;
+    }
+    .timezone-info {
+      font-size: 0.8rem;
+      color: var(--secondary-color);
+      margin-top: 0.5rem;
+    }
   </style>
 </head>
 <body>
@@ -161,6 +172,7 @@
 
     <div class="card">
       <h2>Nodes</h2>
+      <div class="timezone-info">Times shown in your local timezone</div>
       <table>
         <thead>
           <tr>
@@ -175,7 +187,7 @@
           <tr>
             <td>{{ node.node_id }}</td>
             <td>{{ node.cpu }}</td>
-            <td>{{ node.last_heartbeat }}</td>
+            <td class="timestamp" data-utc="{{ node.last_heartbeat }}">{{ node.last_heartbeat.split('.')[0].replace('T', ' ') }}</td>
             <td>
               {% for pod in node.running_pods %}
                 {{ pod }}{% if not loop.last %}, {% endif %}
@@ -223,6 +235,27 @@
         <button type="submit">Launch Pod</button>
       </form>
     </div>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        const timestamps = document.querySelectorAll('.timestamp');
+        timestamps.forEach(timestamp => {
+          const utcTime = timestamp.getAttribute('data-utc');
+          const localDate = new Date(utcTime);
+          const formattedTime = localDate.toLocaleString('en-US', {
+            year: 'numeric',
+            month: '2-digit',
+            day: '2-digit',
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit',
+            hour12: false,
+            timeZone: 'Asia/Kolkata'
+          });
+          timestamp.textContent = formattedTime;
+        });
+      });
+    </script>
   </div>
 </body>
 </html>
