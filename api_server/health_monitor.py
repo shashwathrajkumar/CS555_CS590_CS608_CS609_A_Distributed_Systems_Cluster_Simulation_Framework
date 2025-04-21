@@ -5,7 +5,7 @@ from node_manager import get_cluster_state
 
 HEARTBEAT_TIMEOUT_SECONDS = 15
 CHECK_INTERVAL_SECONDS = 5
-
+#main monitro nodes
 def monitor_nodes():
     while True:
         time.sleep(CHECK_INTERVAL_SECONDS)
