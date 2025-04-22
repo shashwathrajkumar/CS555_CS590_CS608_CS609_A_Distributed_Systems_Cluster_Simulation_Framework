@@ -2,8 +2,8 @@
 FROM python:3.10-slim
 
 WORKDIR /app
-COPY node_script.py .
+COPY new_node.py .
 
 RUN pip install requests
 
-ENTRYPOINT ["python", "node_script.py"]
+ENTRYPOINT ["python", "new_node.py"]

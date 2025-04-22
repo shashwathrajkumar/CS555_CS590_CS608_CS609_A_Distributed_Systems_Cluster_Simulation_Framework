@@ -2,7 +2,6 @@ from flask import jsonify
 from node_manager import get_cluster_state
 
 def schedule_pod(data):
-    
     pod_id = data.get('pod_id')
     cpu_needed = data.get('cpu')
     print(f"Trying to schedule pod {pod_id} with {cpu_needed} CPU...")
